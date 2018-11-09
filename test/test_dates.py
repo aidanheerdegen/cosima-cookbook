@@ -49,6 +49,14 @@ def teardown_module(module):
     if verbose: print ("teardown_module   module:%s" % module.__name__)
     # Put any taerdown code in here, like deleting temporary files
 
+def test_date2num_rounding():
+    day=1
+    roundtripday = cftime.date2num(cftime.num2date(day,units='days since 01-01-01',calendar='noleap'),units='days since 01-01-01',calendar='noleap')
+    # If this test starts failing it means the spurious precision of cftime.date2num
+    # has been resolved and cosima_cookbook.date_utils.date2num_round is no longer
+    # required
+    assert(not (day == roundtripday))
+
 def test_rebase_times():
 
     # Should be a 10 year offset between original times and rebased times
